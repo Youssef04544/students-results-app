@@ -14,6 +14,7 @@ const StudentsTable = () => {
                 </th>
               );
             })}
+            <th scope='col'>remark</th>
           </tr>
         </thead>
         <tbody>

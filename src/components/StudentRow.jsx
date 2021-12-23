@@ -12,6 +12,8 @@ const StudentRow = ({ student }) => {
   //checks if the students passes or not to color the row accordingly
   const rowStyle = () => {
     if (studentAverageScore >= 10) return "table-infos";
+    else if (studentAverageScore < 10 && studentAverageScore >= 9)
+      return "table-warnings";
     else return "table-dangers";
   };
 
@@ -19,6 +21,19 @@ const StudentRow = ({ student }) => {
   const calculateBirthDate = (birthDate) => {
     const date = new Date(birthDate);
     return date.toISOString().split("T")[0];
+  };
+
+  const getTheRemark = () => {
+    if (studentAverageScore >= 10 && studentAverageScore < 12)
+      return <td>Passable</td>;
+    if (studentAverageScore >= 12 && studentAverageScore < 14)
+      return <td>Bien</td>;
+    if (studentAverageScore >= 14 && studentAverageScore < 16)
+      return <td>Très bien</td>;
+    if (studentAverageScore > 16) return <td>Excellent</td>;
+    else {
+      return <td></td>;
+    }
   };
 
   return (
@@ -34,6 +49,7 @@ const StudentRow = ({ student }) => {
           return <td key={student[info]}>{student[info]}</td>;
         }
       })}
+      {getTheRemark()}
     </tr>
   );
 };
