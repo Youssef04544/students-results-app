@@ -3,25 +3,25 @@ const StudentRow = ({ student }) => {
   const studentInfo = Object.keys(student);
 
   //calculates the average score for each student following a formula
-  const calculateScore = (score) => {
-    const averageScore =
-      (score.firstTermScore +
-        (score.secondTermScore + score.thirdTermScore) * 2) /
-      5;
-    return averageScore;
-  };
+  // const calculateScore = (score) => {
+  //   const averageScore =
+  //     (score.firstTermScore +
+  //       (score.secondTermScore + score.thirdTermScore) * 2) /
+  //     5;
+  //   return averageScore;
+  // };
+  const studentScores = student.score[0];
+  const studentAverageScore =
+    (studentScores.firstTermScore +
+      (studentScores.secondTermScore + studentScores.thirdTermScore) * 2) /
+    5;
   return (
     <tr>
       {studentInfo.map((info) => {
         if (info !== "score") {
-          console.log(info);
           return <td key={student[info]}>{student[info]}</td>;
         } else {
-          return (
-            <td key={calculateScore(student.score[0])}>
-              {calculateScore(student.score[0])}
-            </td>
-          );
+          return <td key={studentAverageScore}>{studentAverageScore}</td>;
         }
       })}
     </tr>
