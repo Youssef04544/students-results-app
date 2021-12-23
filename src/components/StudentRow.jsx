@@ -14,11 +14,22 @@ const StudentRow = ({ student }) => {
     if (studentAverageScore >= 10) return "table-infos";
     else return "table-dangers";
   };
+
+  //converts the birthDate data into a readable format
+  const calculateBirthDate = (birthDate) => {
+    const date = new Date(birthDate);
+    return date.toISOString().split("T")[0];
+  };
+
   return (
     <tr className={rowStyle()}>
       {studentInfo.map((info) => {
         if (info === "score") {
           return <td key={studentAverageScore}>{studentAverageScore}</td>;
+        } else if (info === "birthDate") {
+          return (
+            <td key={student[info]}>{calculateBirthDate(student[info])}</td>
+          );
         } else {
           return <td key={student[info]}>{student[info]}</td>;
         }

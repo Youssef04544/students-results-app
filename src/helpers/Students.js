@@ -4,7 +4,7 @@ const Students = [
     name: "Khatteche",
     lastName: "Mohamed Joud",
     gender: "Homme",
-    birthDate: "20200831T00:00:00",
+    birthDate: "2020-08-31T00:00:00",
     section: "Mathematique",
     email: "djoekhatteche@gmail.com",
     score: [
@@ -20,7 +20,7 @@ const Students = [
     name: "Ben Abdallah",
     lastName: "Bechir",
     gender: "Homme",
-    birthDate: "20191031T00:00:00",
+    birthDate: "2019-10-31T00:00:00",
     section: "Informatique",
     email: "biboubenabdallah@gmail.com",
     score: [
@@ -36,7 +36,7 @@ const Students = [
     name: "Chilly",
     lastName: "Islem",
     gender: "Femme",
-    birthDate: "20101210T00:00:00",
+    birthDate: "2010-12-10T00:00:00",
     section: "Informatique",
     email: "islemchelly@gmail.com",
     score: [
@@ -52,7 +52,7 @@ const Students = [
     name: "Bhouri",
     lastName: "Chadiya",
     gender: "Femme",
-    birthDate: "20170817T00:00:00",
+    birthDate: "2017-08-17T00:00:00",
     section: "Lettre",
     email: "chadiyabhouri@gmail.com",
     score: [
@@ -68,7 +68,7 @@ const Students = [
     name: "Sokrat",
     lastName: "Jawaher",
     gender: "Femme",
-    birthDate: "19980607T00:00:00",
+    birthDate: "1998-06-07T00:00:00",
     section: "Science naturelle",
     email: "jawahersokrat@gmail.com",
     score: [
@@ -84,7 +84,7 @@ const Students = [
     name: "Ksouri",
     lastName: "Bayrem",
     gender: "Homme",
-    birthDate: "20051130T00:00:00",
+    birthDate: "2005-11-30T00:00:00",
     section: "Science naturelle",
     email: "bayremksouri@gmail.com",
     score: [
@@ -100,7 +100,7 @@ const Students = [
     name: "Fehri",
     lastName: "Riadh",
     gender: "Homme",
-    birthDate: "20131025T00:00:00",
+    birthDate: "2013-10-25T00:00:00",
     section: "Mathematique",
     email: "riadhfehri@gmail.com",
     score: [
@@ -116,7 +116,7 @@ const Students = [
     name: "Barhoumi",
     lastName: "Ibtissem",
     gender: "Femme",
-    birthDate: "20070719T00:00:00",
+    birthDate: "2007-07-19T00:00:00",
     section: "Lettre",
     email: "ibtissembarhoumi@gmail.com",
     score: [
@@ -132,7 +132,7 @@ const Students = [
     name: "Akrout",
     lastName: "Sondes",
     gender: "Femme",
-    birthDate: "20010313T00:00:00",
+    birthDate: "2001-03-13T00:00:00",
     section: "Lettre",
     email: "sondesakrout@gmail.com",
     score: [
@@ -148,7 +148,7 @@ const Students = [
     name: "Kanzari",
     lastName: "Anouar",
     gender: "Homme",
-    birthDate: "20160824T00:00:00",
+    birthDate: "2016-08-24T00:00:00",
     section: "Mathematique",
     email: "anouarkanzari@gmail.com",
     score: [
