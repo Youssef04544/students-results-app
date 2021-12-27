@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Students from "../helpers/Students";
+import TheStudents from "../helpers/Students";
 import StudentRow from "./StudentRow";
 
+let Students = TheStudents;
 const StudentsTable = () => {
   const [currentStudents, setCurrentStudents] = useState(Students);
   const [gotStudents, setGotStudents] = useState(true);
@@ -12,15 +13,16 @@ const StudentsTable = () => {
     if (filterName === "") {
       setCurrentStudents(Students);
     } else {
-      var filteredStudents = Students.filter((student) => {
+      let filteredStudents = Students.filter((student) => {
         return student.name.toLowerCase().includes(filterName.toLowerCase());
       });
       setCurrentStudents(filteredStudents);
+      if (filteredStudents.length >= 1 && !gotStudents) setGotStudents(true);
+      else if (filteredStudents.length === 0 && gotStudents)
+        setGotStudents(false);
     }
-    if (filteredStudents.length >= 1 && !gotStudents) setGotStudents(true);
-    else if (filteredStudents.length === 0 && gotStudents)
-      setGotStudents(false);
   };
+
   //sorts the table by score "asc"
   const sortTableScore = () => {
     const sortedTable = currentStudents.sort((student1, student2) => {
@@ -56,6 +58,14 @@ const StudentsTable = () => {
     );
   };
 
+  const removeStudent = (studentID) => {
+    const updatedStudentsArray = currentStudents.filter(
+      (student) => student.id !== studentID
+    );
+    setCurrentStudents((prevStudents) => [...updatedStudentsArray]);
+    Students = [...updatedStudentsArray];
+  };
+
   return (
     <>
       <input
@@ -65,37 +75,44 @@ const StudentsTable = () => {
         aria-label='Search'
         onChange={(e) => filterStudents(e.target.value)}
       />
-      {gotStudents
-        ? "No matches found." && (
-            <table className='table'>
-              <thead>
-                <tr>
-                  {Object.keys(Students[0]).map((key) => {
-                    if (key === "id" || key === "email")
-                      return (
-                        <th scope='col' key={key}>
-                          {key}
-                        </th>
-                      );
-                    return (
-                      <th scope='col' key={key}>
-                        <a href='/' value={key} onClick={(e) => sortTable(e)}>
-                          {key}
-                        </a>
-                      </th>
-                    );
-                  })}
-                  <th scope='col'>remark</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentStudents.map((student) => {
-                  return <StudentRow student={student} key={student.id} />;
-                })}
-              </tbody>
-            </table>
-          )
-        : "No matches found"}
+      {gotStudents ? (
+        <table className='table'>
+          <thead>
+            <tr>
+              {Object.keys(Students[0]).map((key) => {
+                if (key === "id" || key === "email")
+                  return (
+                    <th scope='col' key={key}>
+                      {key}
+                    </th>
+                  );
+                return (
+                  <th scope='col' key={key}>
+                    <a href='/' value={key} onClick={(e) => sortTable(e)}>
+                      {key}
+                    </a>
+                  </th>
+                );
+              })}
+              <th scope='col'>remark</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentStudents.map((student) => {
+              return (
+                <StudentRow
+                  student={student}
+                  key={student.id}
+                  onDelete={removeStudent}
+                  studentID={student.id}
+                />
+              );
+            })}
+          </tbody>
+        </table>
+      ) : (
+        "No matches found"
+      )}
     </>
   );
 };

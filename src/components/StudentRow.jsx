@@ -1,4 +1,4 @@
-const StudentRow = ({ student }) => {
+const StudentRow = ({ student, onDelete, studentID }) => {
   //gets all the props of a student Object so we can map through them in a row
   const studentInfo = Object.keys(student);
 
@@ -50,6 +50,11 @@ const StudentRow = ({ student }) => {
         }
       })}
       {getTheRemark()}
+      <td>
+        <button className='btn btn-danger' onClick={() => onDelete(studentID)}>
+          Delete
+        </button>
+      </td>
     </tr>
   );
 };
