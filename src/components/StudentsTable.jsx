@@ -5,6 +5,7 @@ import StudentRow from "./StudentRow";
 const StudentsTable = () => {
   const [currentStudents, setCurrentStudents] = useState(Students);
   const [gotStudents, setGotStudents] = useState(true);
+  const [currentSort, setCurrentSort] = useState(""); // use for performance so we dont resort the list if it's already sorted by the chosen sorting value
 
   const filterStudents = (filterName) => {
     // if no filter applied, shows all the students
@@ -30,11 +31,13 @@ const StudentsTable = () => {
       if (score1 === score2) return 0;
     });
     setCurrentStudents((prevTable) => [...sortedTable]);
+    setCurrentSort("score");
   };
   //handles all kinds of table sorting
   const sortTable = (e) => {
     e.preventDefault();
     const sortingValue = e.target.innerHTML;
+    if (sortingValue === currentSort) return;
     if (sortingValue === "score") return sortTableScore();
     const sortedTable = currentStudents.sort((student1, student2) => {
       if (student1[sortingValue] > student2[sortingValue]) return 1;
@@ -42,6 +45,7 @@ const StudentsTable = () => {
       if (student1[sortingValue] === student2[sortingValue]) return 0;
     });
     setCurrentStudents((prevStudents) => [...sortedTable]);
+    setCurrentSort(sortingValue);
   };
 
   const getAverageScore = (studentScores) => {
@@ -92,7 +96,6 @@ const StudentsTable = () => {
             </table>
           )
         : "No matches found"}
-      <button value={"poop"}>lastName</button>
     </>
   );
 };
