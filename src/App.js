@@ -1,10 +1,14 @@
+import { useState } from "react";
 import "./App.css";
+import AddStudentForm from "./components/AddStudentForm";
 import StudentsTable from "./components/StudentsTable";
 
 function App() {
+  const [addingStudent, setAddingStudent] = useState(false);
   return (
     <>
-      <StudentsTable />
+      {!addingStudent && <StudentsTable />}
+      {/* <AddStudentForm /> */}
     </>
   );
 }

@@ -59,10 +59,17 @@ const StudentsTable = () => {
   };
 
   const removeStudent = (studentID) => {
-    const updatedStudentsArray = currentStudents.filter(
+    //made two different updated arrays one to handle the delete on the Students array the other to handle the currently displayed list of
+    //students
+    const updatedStudentsArray = Students.filter(
       (student) => student.id !== studentID
     );
-    setCurrentStudents((prevStudents) => [...updatedStudentsArray]);
+    const updatedCurrentStudentsArray = currentStudents.filter(
+      (student) => student.id !== studentID
+    );
+    setCurrentStudents((prevStudents) => [...updatedCurrentStudentsArray]);
+    //if we set the current student's list to 0 and dont handle the gotStudents we'll get a blank array
+    if (updatedCurrentStudentsArray.length === 0) setGotStudents(false);
     Students = [...updatedStudentsArray];
   };
 
@@ -110,6 +117,8 @@ const StudentsTable = () => {
             })}
           </tbody>
         </table>
+      ) : Students.length === 0 ? (
+        "The list of Students is empty."
       ) : (
         "No matches found"
       )}
