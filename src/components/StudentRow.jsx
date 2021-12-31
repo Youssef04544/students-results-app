@@ -1,4 +1,6 @@
+import { useState } from "react";
 const StudentRow = ({ student, onDelete, studentID, onUpdateStudent }) => {
+  const [pass, setPass] = useState(false);
   //gets all the props of a student Object so we can map through them in a row
   const studentInfo = Object.keys(student);
 
@@ -13,7 +15,7 @@ const StudentRow = ({ student, onDelete, studentID, onUpdateStudent }) => {
   const rowStyle = () => {
     if (studentAverageScore >= 10) return "table-infos";
     else if (studentAverageScore < 10 && studentAverageScore >= 9)
-      return "table-warnings";
+      return pass ? "table-infos" : "table-warnings";
     else return "table-dangers";
   };
 
@@ -31,6 +33,17 @@ const StudentRow = ({ student, onDelete, studentID, onUpdateStudent }) => {
     if (studentAverageScore >= 14 && studentAverageScore < 16)
       return <td>Très bien</td>;
     if (studentAverageScore > 16) return <td>Excellent</td>;
+    if (studentAverageScore < 10 && studentAverageScore >= 9)
+      return (
+        <td>
+          Rachat
+          <input
+            className='ms-2'
+            type='checkbox'
+            onChange={() => setPass(!pass)}
+          />
+        </td>
+      );
     else {
       return <td></td>;
     }
