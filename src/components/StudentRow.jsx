@@ -1,4 +1,4 @@
-const StudentRow = ({ student, onDelete, studentID }) => {
+const StudentRow = ({ student, onDelete, studentID, onUpdateStudent }) => {
   //gets all the props of a student Object so we can map through them in a row
   const studentInfo = Object.keys(student);
 
@@ -44,6 +44,19 @@ const StudentRow = ({ student, onDelete, studentID }) => {
         } else if (info === "birthDate") {
           return (
             <td key={student[info]}>{calculateBirthDate(student[info])}</td>
+          );
+        } else if (info === "name") {
+          return (
+            <td key={student[info]}>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onUpdateStudent(student);
+                }}
+              >
+                {student[info]}
+              </button>
+            </td>
           );
         } else {
           return <td key={student[info]}>{student[info]}</td>;

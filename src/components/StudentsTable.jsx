@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import TheStudents from "../helpers/Students";
+
 import StudentRow from "./StudentRow";
 
-let Students = TheStudents;
-const StudentsTable = () => {
+const StudentsTable = ({
+  onSetAddingStudent,
+  Students,
+  onSetOriginalStudentList,
+  onUpdateStudent,
+}) => {
   const [currentStudents, setCurrentStudents] = useState(Students);
   const [gotStudents, setGotStudents] = useState(true);
   const [currentSort, setCurrentSort] = useState(""); // use for performance so we dont resort the list if it's already sorted by the chosen sorting value
@@ -41,6 +45,7 @@ const StudentsTable = () => {
     const sortingValue = e.target.innerHTML;
     if (sortingValue === currentSort) return;
     if (sortingValue === "score") return sortTableScore();
+
     const sortedTable = currentStudents.sort((student1, student2) => {
       if (student1[sortingValue] > student2[sortingValue]) return 1;
       if (student1[sortingValue] < student2[sortingValue]) return -1;
@@ -70,11 +75,17 @@ const StudentsTable = () => {
     setCurrentStudents((prevStudents) => [...updatedCurrentStudentsArray]);
     //if we set the current student's list to 0 and dont handle the gotStudents we'll get a blank array
     if (updatedCurrentStudentsArray.length === 0) setGotStudents(false);
-    Students = [...updatedStudentsArray];
+    onSetOriginalStudentList([...updatedStudentsArray]);
   };
 
   return (
     <>
+      <button
+        className='btn btn-primary'
+        onClick={() => onSetAddingStudent(true)}
+      >
+        Add a Student
+      </button>
       <input
         className='form-control me-2'
         type='search'
@@ -112,6 +123,7 @@ const StudentsTable = () => {
                   key={student.id}
                   onDelete={removeStudent}
                   studentID={student.id}
+                  onUpdateStudent={onUpdateStudent}
                 />
               );
             })}
