@@ -49,6 +49,7 @@ const StudentRow = ({ student, onDelete, studentID, onUpdateStudent }) => {
           return (
             <td key={student[info]}>
               <button
+                className='update-student-btn'
                 onClick={(e) => {
                   e.preventDefault();
                   onUpdateStudent(student);

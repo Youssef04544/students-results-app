@@ -16,7 +16,13 @@ function App() {
   };
   //i stopped here now gotta make the studentform component and handle the intake then the return of the function
   if (updatingStudent)
-    return <UpdateStudentForm Student={currentStudentToUpdate} />;
+    return (
+      <UpdateStudentForm
+        Student={currentStudentToUpdate}
+        onSetOriginalStudentList={setOriginalStudentList}
+        onSetUpdatingStudent={setUpdatingStudent}
+      />
+    );
   return (
     <>
       {!addingStudent && (

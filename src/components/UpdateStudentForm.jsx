@@ -1,15 +1,31 @@
 import { useState } from "react";
 
-const UpdateStudentForm = ({ Student }) => {
-  console.log(Student);
+const UpdateStudentForm = ({
+  Student,
+  onSetOriginalStudentList,
+  onSetUpdatingStudent,
+}) => {
+  const [name, setName] = useState(Student.name);
+  const [lastName, setLastName] = useState(Student.lastName);
+  const [gender, setGender] = useState(Student.gender);
   const [birthDate, setBirthDate] = useState(Student.birthDate.split("T")[0]);
+  const [section, setSection] = useState(Student.section);
+  const [email, setEmail] = useState(Student.email);
+  const [score, setScore] = useState(Student.score[0]);
   return (
     <>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          // onSetOriginalStudentList((prevList) => [...prevList, Student]);
-          // onSetAddingStudent(false);
+          onSetOriginalStudentList((prevList) => {
+            const studentsList = prevList;
+            const index = studentsList.findIndex(
+              (element) => element.id === Student.id
+            );
+            studentsList[index] = { ...Student };
+            return [...studentsList];
+          });
+          onSetUpdatingStudent(false);
         }}
       >
         <div className='form-group'>
@@ -19,7 +35,11 @@ const UpdateStudentForm = ({ Student }) => {
             id='name'
             type='text'
             className='form-control'
-            onChange={(e) => (Student.name = e.target.value)}
+            onChange={(e) => {
+              Student.name = e.target.value;
+              setName(e.target.value);
+            }}
+            value={name}
           />
         </div>
         <div className='form-group'>
@@ -29,18 +49,25 @@ const UpdateStudentForm = ({ Student }) => {
             id='lastname'
             type='text'
             className='form-control'
-            onChange={(e) => (Student.lastName = e.target.value)}
+            onChange={(e) => {
+              Student.lastName = e.target.value;
+              setLastName(e.target.value);
+            }}
+            value={lastName}
           />
         </div>
         <div className='form-group'>
-          <label htmlFor='lastname'>Gender</label>
+          <label htmlFor='gender'>Gender</label>
           <input
             required
             id='gender'
             type='text'
             className='form-control'
-            onChange={(e) => (Student.gender = e.target.value)}
-            value={Student.gender}
+            onChange={(e) => {
+              Student.gender = e.target.value;
+              setGender(e.target.value);
+            }}
+            value={gender}
           />
         </div>
 
@@ -54,21 +81,23 @@ const UpdateStudentForm = ({ Student }) => {
             onChange={(e) => {
               Student.birthDate = e.target.value;
               setBirthDate(e.target.value);
-              console.log(Student);
             }}
             value={birthDate}
           />
         </div>
 
         <div className='form-group'>
-          <label htmlFor='lastname'>Section</label>
+          <label htmlFor='section'>Section</label>
           <input
             required
             id='section'
             type='text'
             className='form-control'
-            onChange={(e) => (Student.section = e.target.value)}
-            value={Student.section}
+            onChange={(e) => {
+              Student.section = e.target.value;
+              setSection(e.target.value);
+            }}
+            value={section}
           />
         </div>
 
@@ -79,7 +108,11 @@ const UpdateStudentForm = ({ Student }) => {
             id='email'
             type='email'
             className='form-control'
-            onChange={(e) => (Student.email = e.target.value)}
+            onChange={(e) => {
+              Student.email = e.target.value;
+              setEmail(e.target.value);
+            }}
+            value={email}
           />
         </div>
         <div className='form-group'>
@@ -91,10 +124,17 @@ const UpdateStudentForm = ({ Student }) => {
             max={20}
             min={0}
             className='form-control'
-            onChange={(e) =>
-              (Student.score.firstTermScore = parseInt(e.target.value))
-            }
+            onChange={(e) => {
+              Student.score[0].firstTermScore = parseInt(e.target.value);
+              setScore((prevScore) => {
+                return {
+                  ...prevScore,
+                  firstTermScore: parseInt(e.target.value),
+                };
+              });
+            }}
             placeholder='first term score'
+            value={score.firstTermScore}
           />
           <input
             required
@@ -103,10 +143,17 @@ const UpdateStudentForm = ({ Student }) => {
             max={20}
             min={0}
             className='form-control'
-            onChange={(e) =>
-              (Student.score[0].secondTermScore = parseInt(e.target.value))
-            }
+            onChange={(e) => {
+              Student.score[0].secondTermScore = parseInt(e.target.value);
+              setScore((prevScore) => {
+                return {
+                  ...prevScore,
+                  secondTermScore: parseInt(e.target.value),
+                };
+              });
+            }}
             placeholder='second term score'
+            value={score.secondTermScore}
           />
           <input
             required
@@ -115,12 +162,22 @@ const UpdateStudentForm = ({ Student }) => {
             max={20}
             min={0}
             className='form-control'
-            onChange={(e) =>
-              (Student.score[0].thirdTermScore = parseInt(e.target.value))
-            }
+            onChange={(e) => {
+              Student.score[0].thirdTermScore = parseInt(e.target.value);
+              setScore((prevScore) => {
+                return {
+                  ...prevScore,
+                  thirdTermScore: parseInt(e.target.value),
+                };
+              });
+            }}
             placeholder='third term score'
+            value={score.thirdTermScore}
           />
         </div>
+        <button type='submit' className='btn btn-primary'>
+          Update
+        </button>
       </form>
     </>
   );
