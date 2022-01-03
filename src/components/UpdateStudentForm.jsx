@@ -12,21 +12,49 @@ const UpdateStudentForm = ({
   const [section, setSection] = useState(Student.section);
   const [email, setEmail] = useState(Student.email);
   const [score, setScore] = useState(Student.score[0]);
+
+  const resetAll = (e) => {
+    e.preventDefault();
+    setName(Student.name);
+    setLastName(Student.lastName);
+    setGender(Student.gender);
+    setBirthDate(Student.birthDate.split("T")[0]);
+    setSection(Student.section);
+    setEmail(Student.email);
+    setScore(Student.score[0]);
+    console.log("everything is reset lol");
+  };
+  const sumbitStudentForm = () => {
+    Student = {
+      ...Student,
+      name,
+      lastName,
+      gender,
+      birthDate,
+      section,
+      email,
+      score: [score],
+    };
+    console.log(Student);
+    onSetOriginalStudentList((prevList) => {
+      const studentsList = prevList;
+      const index = studentsList.findIndex(
+        (element) => element.id === Student.id
+      );
+      studentsList[index] = { ...Student };
+      return [...studentsList];
+    });
+    onSetUpdatingStudent(false);
+  };
   return (
     <>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          onSetOriginalStudentList((prevList) => {
-            const studentsList = prevList;
-            const index = studentsList.findIndex(
-              (element) => element.id === Student.id
-            );
-            studentsList[index] = { ...Student };
-            return [...studentsList];
-          });
-          onSetUpdatingStudent(false);
+          sumbitStudentForm();
         }}
+        onReset={(e) => resetAll(e)}
+        className='container border border-2 border-dark rounded my-3 p-3'
       >
         <div className='form-group'>
           <label htmlFor='name'>Name</label>
@@ -36,7 +64,6 @@ const UpdateStudentForm = ({
             type='text'
             className='form-control'
             onChange={(e) => {
-              Student.name = e.target.value;
               setName(e.target.value);
             }}
             value={name}
@@ -50,7 +77,6 @@ const UpdateStudentForm = ({
             type='text'
             className='form-control'
             onChange={(e) => {
-              Student.lastName = e.target.value;
               setLastName(e.target.value);
             }}
             value={lastName}
@@ -64,7 +90,6 @@ const UpdateStudentForm = ({
             type='text'
             className='form-control'
             onChange={(e) => {
-              Student.gender = e.target.value;
               setGender(e.target.value);
             }}
             value={gender}
@@ -79,7 +104,6 @@ const UpdateStudentForm = ({
             type='date'
             className='form-control'
             onChange={(e) => {
-              Student.birthDate = e.target.value;
               setBirthDate(e.target.value);
             }}
             value={birthDate}
@@ -94,7 +118,6 @@ const UpdateStudentForm = ({
             type='text'
             className='form-control'
             onChange={(e) => {
-              Student.section = e.target.value;
               setSection(e.target.value);
             }}
             value={section}
@@ -109,13 +132,12 @@ const UpdateStudentForm = ({
             type='email'
             className='form-control'
             onChange={(e) => {
-              Student.email = e.target.value;
               setEmail(e.target.value);
             }}
             value={email}
           />
         </div>
-        <div className='form-group'>
+        <div className='form-group score-group'>
           <label htmlFor='score'>Score</label>
           <input
             required
@@ -125,7 +147,6 @@ const UpdateStudentForm = ({
             min={0}
             className='form-control'
             onChange={(e) => {
-              Student.score[0].firstTermScore = parseInt(e.target.value);
               setScore((prevScore) => {
                 return {
                   ...prevScore,
@@ -144,7 +165,6 @@ const UpdateStudentForm = ({
             min={0}
             className='form-control'
             onChange={(e) => {
-              Student.score[0].secondTermScore = parseInt(e.target.value);
               setScore((prevScore) => {
                 return {
                   ...prevScore,
@@ -163,7 +183,6 @@ const UpdateStudentForm = ({
             min={0}
             className='form-control'
             onChange={(e) => {
-              Student.score[0].thirdTermScore = parseInt(e.target.value);
               setScore((prevScore) => {
                 return {
                   ...prevScore,
@@ -175,9 +194,21 @@ const UpdateStudentForm = ({
             value={score.thirdTermScore}
           />
         </div>
-        <button type='submit' className='btn btn-primary'>
-          Update
-        </button>
+        <div className='d-flex justify-content-between'>
+          <button type='reset' className='btn btn-warning'>
+            Reset
+          </button>
+          <button type='submit' className='btn btn-primary'>
+            Update
+          </button>
+          <button
+            type='button'
+            className='btn btn-danger'
+            onClick={() => onSetUpdatingStudent(false)}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </>
   );

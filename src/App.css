@@ -23,3 +23,14 @@
   text-decoration: underline;
   color: white;
 }
+.form-group {
+  margin-bottom: 1rem !important;
+}
+
+.score-group {
+  display: flex;
+  align-items: center;
+}
+.score-group input {
+  margin-left: 0.5rem;
+}

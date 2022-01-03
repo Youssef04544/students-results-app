@@ -25,6 +25,7 @@ const AddStudentForm = ({ onSetAddingStudent, onSetOriginalStudentList }) => {
           onSetOriginalStudentList((prevList) => [...prevList, Student]);
           onSetAddingStudent(false);
         }}
+        className='container border border-2 border-dark rounded my-3 p-3'
       >
         <div className='form-group'>
           <label htmlFor='name'>Name</label>
@@ -155,6 +156,7 @@ const AddStudentForm = ({ onSetAddingStudent, onSetOriginalStudentList }) => {
             required
             id='score'
             type='number'
+            step={0.01}
             max={20}
             min={0}
             className='form-control'
@@ -167,6 +169,7 @@ const AddStudentForm = ({ onSetAddingStudent, onSetOriginalStudentList }) => {
             required
             id='score'
             type='number'
+            step={0.01}
             max={20}
             min={0}
             className='form-control'
@@ -179,6 +182,7 @@ const AddStudentForm = ({ onSetAddingStudent, onSetOriginalStudentList }) => {
             required
             id='score'
             type='number'
+            step={0.01}
             max={20}
             min={0}
             className='form-control'
@@ -189,7 +193,7 @@ const AddStudentForm = ({ onSetAddingStudent, onSetOriginalStudentList }) => {
           />
         </div>
 
-        <button type='submit' className='btn btn-primary'>
+        <button type='submit' className='btn btn-primary '>
           Add
         </button>
       </form>
