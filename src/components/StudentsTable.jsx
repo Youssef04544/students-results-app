@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import StudentRow from "./StudentRow";
 
 const StudentsTable = ({
-  onSetAddingStudent,
+  onSetStudentFormOpen,
   Students,
   onSetOriginalStudentList,
   onUpdateStudent,
@@ -82,7 +82,7 @@ const StudentsTable = ({
     <>
       <button
         className='btn btn-primary'
-        onClick={() => onSetAddingStudent(true)}
+        onClick={() => onSetStudentFormOpen(true)}
       >
         Add a Student
       </button>

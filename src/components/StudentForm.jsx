@@ -1,27 +1,50 @@
 import { useState } from "react";
 
-const UpdateStudentForm = ({
+const StudentForm = ({
   Student,
   onSetOriginalStudentList,
-  onSetUpdatingStudent,
+  onSetStudentFormOpen,
+  onSetCurrentStudentToUpdate,
 }) => {
-  const [name, setName] = useState(Student.name);
-  const [lastName, setLastName] = useState(Student.lastName);
-  const [gender, setGender] = useState(Student.gender);
-  const [birthDate, setBirthDate] = useState(Student.birthDate.split("T")[0]);
-  const [section, setSection] = useState(Student.section);
-  const [email, setEmail] = useState(Student.email);
-  const [score, setScore] = useState(Student.score[0]);
+  const [name, setName] = useState(Student.name || "");
+  const [lastName, setLastName] = useState(Student.lastName || "");
+  const [gender, setGender] = useState(Student.gender || "");
+  //because im using split here, I must use the function init for default value otherwise it would crash the app when we have no Student
+  //object available to apply the .split() on
+  const [birthDate, setBirthDate] = useState(() => {
+    if (Student.name) return Student.birthDate.split("T")[0];
+    return "";
+  });
+  const [section, setSection] = useState(Student.section || "");
+  const [email, setEmail] = useState(Student.email || "");
+  const [score, setScore] = useState(() => {
+    if (Student.score) return Student.score[0];
+    return {
+      firstTermScore: 0,
+      secondTermScore: 0,
+      thirdTermScore: 0,
+    };
+  });
 
   const resetAll = (e) => {
     e.preventDefault();
-    setName(Student.name);
-    setLastName(Student.lastName);
+    setName(Student.name || "");
+    setLastName(Student.lastName || "");
     setGender(Student.gender);
-    setBirthDate(Student.birthDate.split("T")[0]);
-    setSection(Student.section);
-    setEmail(Student.email);
-    setScore(Student.score[0]);
+    setBirthDate((prevValue) => {
+      if (Student.name) return Student.birthDate.split("T")[0];
+      return "";
+    });
+    setSection(Student.section || "");
+    setEmail(Student.email || "");
+    setScore((prevValue) => {
+      if (Student.score) return Student.score[0];
+      return {
+        firstTermScore: 0,
+        secondTermScore: 0,
+        thirdTermScore: 0,
+      };
+    });
     console.log("everything is reset lol");
   };
   const sumbitStudentForm = () => {
@@ -35,16 +58,20 @@ const UpdateStudentForm = ({
       email,
       score: [score],
     };
-    console.log(Student);
+    //Checks if we're adding a new student or updating an existing one
+    if (!Student.id) {
+      onSetOriginalStudentList((prevList) => [
+        ...prevList,
+        { id: prevList.length + 1, ...Student },
+      ]);
+    }
     onSetOriginalStudentList((prevList) => {
-      const studentsList = prevList;
-      const index = studentsList.findIndex(
-        (element) => element.id === Student.id
-      );
-      studentsList[index] = { ...Student };
-      return [...studentsList];
+      const index = prevList.findIndex((element) => element.id === Student.id);
+      prevList[index] = { ...Student };
+      return [...prevList];
     });
-    onSetUpdatingStudent(false);
+    onSetStudentFormOpen(false);
+    onSetCurrentStudentToUpdate({});
   };
   return (
     <>
@@ -143,6 +170,7 @@ const UpdateStudentForm = ({
             required
             id='score'
             type='number'
+            step={0.01}
             max={20}
             min={0}
             className='form-control'
@@ -150,7 +178,7 @@ const UpdateStudentForm = ({
               setScore((prevScore) => {
                 return {
                   ...prevScore,
-                  firstTermScore: parseInt(e.target.value),
+                  firstTermScore: parseFloat(e.target.value),
                 };
               });
             }}
@@ -163,12 +191,13 @@ const UpdateStudentForm = ({
             type='number'
             max={20}
             min={0}
+            step={0.01}
             className='form-control'
             onChange={(e) => {
               setScore((prevScore) => {
                 return {
                   ...prevScore,
-                  secondTermScore: parseInt(e.target.value),
+                  secondTermScore: parseFloat(e.target.value),
                 };
               });
             }}
@@ -179,6 +208,7 @@ const UpdateStudentForm = ({
             required
             id='score'
             type='number'
+            step={0.01}
             max={20}
             min={0}
             className='form-control'
@@ -186,7 +216,7 @@ const UpdateStudentForm = ({
               setScore((prevScore) => {
                 return {
                   ...prevScore,
-                  thirdTermScore: parseInt(e.target.value),
+                  thirdTermScore: parseFloat(e.target.value),
                 };
               });
             }}
@@ -199,12 +229,12 @@ const UpdateStudentForm = ({
             Reset
           </button>
           <button type='submit' className='btn btn-primary'>
-            Update
+            {Student.name ? "Update" : "Add"}
           </button>
           <button
             type='button'
             className='btn btn-danger'
-            onClick={() => onSetUpdatingStudent(false)}
+            onClick={() => onSetStudentFormOpen(false)}
           >
             Cancel
           </button>
@@ -214,4 +244,4 @@ const UpdateStudentForm = ({
   );
 };
 
-export default UpdateStudentForm;
+export default StudentForm;

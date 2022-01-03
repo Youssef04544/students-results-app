@@ -1,48 +1,37 @@
 import { useState } from "react";
 import "./App.css";
-import AddStudentForm from "./components/AddStudentForm";
 import StudentsTable from "./components/StudentsTable";
-import UpdateStudentForm from "./components/UpdateStudentForm";
+import StudentForm from "./components/StudentForm";
 import TheStudents from "./helpers/Students";
 
 function App() {
-  const [addingStudent, setAddingStudent] = useState(false);
+  // const [addingStudent, setAddingStudent] = useState(false);
+  // const [updatingStudent, setUpdatingStudent] = useState(false);
+  const [studentFormOpen, setStudentFormOpen] = useState(false);
   const [originalStudentList, setOriginalStudentList] = useState(TheStudents);
-  const [updatingStudent, setUpdatingStudent] = useState(false);
   const [currentStudentToUpdate, setCurrentStudentToUpdate] = useState({});
   const handleUpdateStudent = (student) => {
-    setUpdatingStudent(true);
+    setStudentFormOpen(true);
     setCurrentStudentToUpdate({ ...student });
   };
 
-  if (updatingStudent)
+  if (studentFormOpen)
     return (
-      <UpdateStudentForm
+      <StudentForm
         Student={currentStudentToUpdate}
         onSetOriginalStudentList={setOriginalStudentList}
-        onSetUpdatingStudent={setUpdatingStudent}
-        onSetAddingStudent={setAddingStudent}
-        onUpdatingStudent={updatingStudent}
-        onAddingStudent={addingStudent}
+        onSetStudentFormOpen={setStudentFormOpen}
+        onSetCurrentStudentToUpdate={setCurrentStudentToUpdate}
       />
     );
   return (
     <>
-      {!addingStudent && (
-        <StudentsTable
-          onSetAddingStudent={setAddingStudent}
-          Students={originalStudentList}
-          onSetOriginalStudentList={setOriginalStudentList}
-          onUpdateStudent={handleUpdateStudent}
-        />
-      )}
-      {addingStudent && (
-        <AddStudentForm
-          onSetAddingStudent={setAddingStudent}
-          Students={originalStudentList}
-          onSetOriginalStudentList={setOriginalStudentList}
-        />
-      )}
+      <StudentsTable
+        onSetStudentFormOpen={setStudentFormOpen}
+        Students={originalStudentList}
+        onSetOriginalStudentList={setOriginalStudentList}
+        onUpdateStudent={handleUpdateStudent}
+      />
     </>
   );
 }
