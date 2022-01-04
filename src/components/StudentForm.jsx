@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Input from "./Input";
 
 const StudentForm = ({
   Student,
@@ -83,87 +84,43 @@ const StudentForm = ({
         onReset={(e) => resetAll(e)}
         className='container border border-2 border-dark rounded my-3 p-3'
       >
-        <div className='form-group'>
-          <label htmlFor='name'>Name</label>
-          <input
-            required
-            id='name'
-            type='text'
-            className='form-control'
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            value={name}
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='lastname'>Last Name</label>
-          <input
-            required
-            id='lastname'
-            type='text'
-            className='form-control'
-            onChange={(e) => {
-              setLastName(e.target.value);
-            }}
-            value={lastName}
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='gender'>Gender</label>
-          <input
-            required
-            id='gender'
-            type='text'
-            className='form-control'
-            onChange={(e) => {
-              setGender(e.target.value);
-            }}
-            value={gender}
-          />
-        </div>
-
-        <div className='form-group'>
-          <label htmlFor='birthdate'>Birth date</label>
-          <input
-            required
-            id='birthdate'
-            type='date'
-            className='form-control'
-            onChange={(e) => {
-              setBirthDate(e.target.value);
-            }}
-            value={birthDate}
-          />
-        </div>
-
-        <div className='form-group'>
-          <label htmlFor='section'>Section</label>
-          <input
-            required
-            id='section'
-            type='text'
-            className='form-control'
-            onChange={(e) => {
-              setSection(e.target.value);
-            }}
-            value={section}
-          />
-        </div>
-
-        <div className='form-group'>
-          <label htmlFor='email'>Email</label>
-          <input
-            required
-            id='email'
-            type='email'
-            className='form-control'
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            value={email}
-          />
-        </div>
+        {/* Input interface : inputName, inputType, inputValue, onSetValue  */}
+        <Input
+          inputName='Name'
+          inputType='text'
+          inputValue={name}
+          onSetValue={setName}
+        />
+        <Input
+          inputName='Last Name'
+          inputType='text'
+          inputValue={lastName}
+          onSetValue={setLastName}
+        />
+        <Input
+          inputName='Gender'
+          inputType='text'
+          inputValue={gender}
+          onSetValue={setGender}
+        />
+        <Input
+          inputName='Birth Date'
+          inputType='date'
+          inputValue={birthDate}
+          onSetValue={setBirthDate}
+        />
+        <Input
+          inputName='Section'
+          inputType='text'
+          inputValue={section}
+          onSetValue={setSection}
+        />
+        <Input
+          inputName='Email'
+          inputType='email'
+          inputValue={email}
+          onSetValue={setEmail}
+        />
         <div className='form-group score-group'>
           <label htmlFor='score'>Score</label>
           <input
