@@ -3,6 +3,7 @@ import "./App.css";
 import StudentsTable from "./components/StudentsTable";
 import StudentForm from "./components/StudentForm";
 import TheStudents from "./helpers/Students";
+import { useQuery } from "react-query";
 
 function App() {
   // const [addingStudent, setAddingStudent] = useState(false);
@@ -14,6 +15,13 @@ function App() {
     setStudentFormOpen(true);
     setCurrentStudentToUpdate({ ...student });
   };
+
+  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const { data, isLoading } = useQuery(["students"], () =>
+    fetcher("http://localhost:3001/api/get-students")
+  );
+
+  if (!isLoading) console.log(data);
 
   if (studentFormOpen)
     return (
