@@ -80,19 +80,22 @@ const StudentsTable = ({
 
   return (
     <>
-      <button
-        className='btn btn-primary'
-        onClick={() => onSetStudentFormOpen(true)}
-      >
-        Add a Student
-      </button>
-      <input
-        className='form-control me-2'
-        type='search'
-        placeholder='Search By Name'
-        aria-label='Search'
-        onChange={(e) => filterStudents(e.target.value)}
-      />
+      <div className='d-flex mt-2'>
+        <input
+          className='form-control me-2'
+          type='search'
+          placeholder='Search By Name'
+          aria-label='Search'
+          style={{ width: "50%" }}
+          onChange={(e) => filterStudents(e.target.value)}
+        />
+        <button
+          className='btn btn-primary'
+          onClick={() => onSetStudentFormOpen(true)}
+        >
+          Add a student
+        </button>
+      </div>
       {gotStudents ? (
         <table className='table'>
           <thead>

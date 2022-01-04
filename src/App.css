@@ -1,3 +1,7 @@
+body {
+  background-color: rgb(228, 227, 227);
+}
+
 .table-infos {
   background-color: green;
   color: white;

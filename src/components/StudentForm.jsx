@@ -77,6 +77,7 @@ const StudentForm = ({
   return (
     <>
       <form
+        style={{ maxWidth: "600px" }}
         onSubmit={(e) => {
           e.preventDefault();
           sumbitStudentForm();
