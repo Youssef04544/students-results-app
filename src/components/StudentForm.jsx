@@ -3,9 +3,12 @@ import Input from "./Input";
 
 const StudentForm = ({
   Student,
-  onSetOriginalStudentList,
+  // onSetOriginalStudentList,
   onSetStudentFormOpen,
   onSetCurrentStudentToUpdate,
+  onAddStudent,
+  studentsList,
+  onUpdateStudent,
 }) => {
   const [name, setName] = useState(Student.name || "");
   const [lastName, setLastName] = useState(Student.lastName || "");
@@ -61,16 +64,13 @@ const StudentForm = ({
     };
     //Checks if we're adding a new student or updating an existing one
     if (!Student.id) {
-      onSetOriginalStudentList((prevList) => [
-        ...prevList,
-        { id: prevList.length + 1, ...Student },
-      ]);
+      onAddStudent({
+        id: studentsList[studentsList.length - 1].id + 1,
+        ...Student,
+      });
     }
-    onSetOriginalStudentList((prevList) => {
-      const index = prevList.findIndex((element) => element.id === Student.id);
-      prevList[index] = { ...Student };
-      return [...prevList];
-    });
+
+    onUpdateStudent(Student);
     onSetStudentFormOpen(false);
     onSetCurrentStudentToUpdate({});
   };

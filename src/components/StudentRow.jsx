@@ -78,7 +78,7 @@ const StudentRow = ({ student, onDelete, studentID, onUpdateStudent }) => {
       })}
       {getTheRemark()}
       <td>
-        <button className='btn btn-danger' onClick={() => onDelete(studentID)}>
+        <button className='btn btn-danger' onClick={() => onDelete(student)}>
           Delete
         </button>
       </td>

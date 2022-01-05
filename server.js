@@ -5,7 +5,7 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-const studentsList = [
+let studentsList = [
   {
     id: 1,
     name: "Khatteche",
@@ -167,17 +167,29 @@ const studentsList = [
     ],
   },
 ];
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
+
 app.get("/api/get-students", (req, res) => {
-  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.json(studentsList);
+});
+
+app.post("/api/update-student", (req, res) => {
+  const student = req.body.student;
+  studentsList.push(student);
+  res.json({ status: "ok" });
+});
+
+app.put(`/api/update-student`, (req, res) => {
+  const studentID = req.body.student.id;
+  studentsList[studentID - 1] = { ...req.body.student };
+  res.json({ status: "okidoki we put it correctly" });
+});
+app.delete(`/api/update-student`, (req, res) => {
+  const studentID = req.body.student.id;
+  const updatedList = studentsList.filter(
+    (student) => student.id !== studentID
+  );
+  studentsList = [...updatedList];
+  res.json({ status: "okidoki we put it correctly" });
 });
 
 app.listen(3001, () => {

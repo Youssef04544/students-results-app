@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import StudentRow from "./StudentRow";
 
 const StudentsTable = ({
   onSetStudentFormOpen,
   Students,
-  onSetOriginalStudentList,
   onUpdateStudent,
+  onStudentDelete,
 }) => {
   const [currentStudents, setCurrentStudents] = useState(Students);
   const [gotStudents, setGotStudents] = useState(true);
   const [currentSort, setCurrentSort] = useState(""); // use for performance so we dont resort the list if it's already sorted by the chosen sorting value
 
+  useEffect(() => {
+    setCurrentStudents(Students);
+  }, [Students]);
   const filterStudents = (filterName) => {
     // if no filter applied, shows all the students
     if (filterName === "") {
@@ -63,21 +65,6 @@ const StudentsTable = ({
     );
   };
 
-  const removeStudent = (studentID) => {
-    //made two different updated arrays one to handle the delete on the Students array the other to handle the currently displayed list of
-    //students
-    const updatedStudentsArray = Students.filter(
-      (student) => student.id !== studentID
-    );
-    const updatedCurrentStudentsArray = currentStudents.filter(
-      (student) => student.id !== studentID
-    );
-    setCurrentStudents((prevStudents) => [...updatedCurrentStudentsArray]);
-    //if we set the current student's list to 0 and dont handle the gotStudents we'll get a blank array
-    if (updatedCurrentStudentsArray.length === 0) setGotStudents(false);
-    onSetOriginalStudentList([...updatedStudentsArray]);
-  };
-
   return (
     <>
       <div className='d-flex mt-2'>
@@ -124,7 +111,7 @@ const StudentsTable = ({
                 <StudentRow
                   student={student}
                   key={student.id}
-                  onDelete={removeStudent}
+                  onDelete={onStudentDelete}
                   studentID={student.id}
                   onUpdateStudent={onUpdateStudent}
                 />
