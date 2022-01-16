@@ -64,6 +64,7 @@ const StudentForm = ({
     };
     //Checks if we're adding a new student or updating an existing one
     if (!Student.id) {
+      //give the student an ID that is ID+1 of the current's list last student
       onAddStudent({
         id: studentsList[studentsList.length - 1].id + 1,
         ...Student,

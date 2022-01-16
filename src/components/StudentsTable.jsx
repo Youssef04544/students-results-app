@@ -10,12 +10,16 @@ const StudentsTable = ({
   const [currentStudents, setCurrentStudents] = useState(Students);
   const [gotStudents, setGotStudents] = useState(true);
   const [currentSort, setCurrentSort] = useState(""); // use for performance so we dont resort the list if it's already sorted by the chosen sorting value
+  const [currentFilter, setCurrentFilter] = useState("");
 
   useEffect(() => {
-    setCurrentStudents(Students);
-  }, [Students]);
+    //checks to make sure we're not filtering or sorting so it can show the complete list of students
+    if (!currentSort && !currentFilter) setCurrentStudents(Students);
+  }, [Students, currentFilter, currentSort]);
+
   const filterStudents = (filterName) => {
     // if no filter applied, shows all the students
+    setCurrentFilter(filterName);
     if (filterName === "") {
       setCurrentStudents(Students);
     } else {
@@ -65,6 +69,17 @@ const StudentsTable = ({
     );
   };
 
+  //handles delete and updating student list in case of sorting / filtering
+  const handleDelete = (studentToDelete) => {
+    onStudentDelete(studentToDelete);
+    if (currentSort || currentFilter) {
+      let newStudentsList = currentStudents.filter(
+        (student) => student.id !== studentToDelete.id
+      );
+      setCurrentStudents(newStudentsList);
+    }
+  };
+
   return (
     <>
       <div className='d-flex mt-2'>
@@ -111,7 +126,7 @@ const StudentsTable = ({
                 <StudentRow
                   student={student}
                   key={student.id}
-                  onDelete={onStudentDelete}
+                  onDelete={handleDelete}
                   studentID={student.id}
                   onUpdateStudent={onUpdateStudent}
                 />
